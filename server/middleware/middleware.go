@@ -6,9 +6,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/perna/go-todo/server/models"
+
+	"github.com/joho/godotenv"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -16,13 +19,26 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-const connectionString = ""
-const dbName = "test"
-const collName = "todolist"
-
 var collection *mongo.Collection
 
 func init() {
+	loadEnvVars()
+	createDBInstance()
+}
+
+func loadEnvVars() {
+	err := godotenv.Load("../.env")
+
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+}
+
+func createDBInstance() {
+	connectionString := os.Getenv("DB_URI")
+	dbName := os.Getenv("DB_NAME")
+	collName := os.Getenv("DB_COLLECTION_NAME")
+
 	clientOptions := options.Client().ApplyURI(connectionString)
 
 	client, err := mongo.Connect(context.TODO(), clientOptions)
