@@ -29,5 +29,9 @@ Note that the development build is not optimized.
 To create a production build, use yarn build.
 ```
 
+Print da App
+![image](https://user-images.githubusercontent.com/1197591/126377616-da0ea165-1324-4799-bfc7-c1d808e0e73b.png)
+
+
 Enjoy.
 
